@@ -15,9 +15,9 @@ jobs:
           release-type: simple
 
           # To support 'plugin.cfg', use the generic updater on the file
-          # 'plugin.cfg'. The version must be identified using
-          # 'x-release-please-start-version' and 'x-release-please-end'.
+          # 'plugin.cfg'. The version must be identified using using an
+          # inline or block comment (e.g. 'x-release-please-version').
           #
           # See https://github.com/googleapis/release-please/blob/HEAD/docs/customizing.md#updating-arbitrary-files.
-          extra-files:
-            - path: "path/to/plugin.cfg"
+          extra-files: |
+            addons/example-plugin/plugin.cfg
