@@ -1,0 +1,23 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3.7.5
+        with:
+          default-branch: main
+          release-type: simple
+
+          # To support 'plugin.cfg', use the generic updater on the file
+          # 'plugin.cfg'. The version must be identified using
+          # 'x-release-please-start-version' and 'x-release-please-end'.
+          #
+          # See https://github.com/googleapis/release-please/blob/HEAD/docs/customizing.md#updating-arbitrary-files.
+          extra-files:
+            - path: "path/to/plugin.cfg"
