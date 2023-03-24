@@ -18,6 +18,10 @@ jobs:
           default-branch: main
           release-type: simple
 
+          # TODO: Once plugin API stabilizes, switch these to 'false'.
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+
           # To support 'plugin.cfg', use the generic updater on the file
           # 'plugin.cfg'. The version must be identified using using an
           # inline or block comment (e.g. 'x-release-please-version').
