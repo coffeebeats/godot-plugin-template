@@ -109,7 +109,7 @@ if [[ "$(
 )" -ne 0 ]]; then
     warn "Could not find 'python3' on \$PATH; please install and then re-run!"
 else
-    info "Ok! Using 'python3' executable: $(which python3)"
+    info "  > Ok! Using 'python3' executable: $(which python3)"
 fi
 
 # ------------------------------- Check: Godot ------------------------------- #
@@ -119,16 +119,16 @@ info "Checking for a 'godot' install..."
 
 GODOT_INSTALL_REQUIRED=0
 if [[ "$INSTALL_GODOT" -eq 1 && -f "$SCRIPT_DIR/godot" ]]; then
-    info "Ok! using 'godot' executable: $(ls $SCRIPT_DIR/godot)"
+    info "  > Ok! using 'godot' executable: $(ls $SCRIPT_DIR/godot)"
 elif [[ "$INSTALL_GODOT" -eq 1 ]]; then
     GODOT_INSTALL_REQUIRED=1
 elif [[ "$(
     command -v godot >/dev/null
     echo $?
 )" -ne 0 ]]; then
-    warn "Could not find 'godot' on \$PATH; consider creating an alias or re-running with the '--install-godot' flag!"
+    warn "  > Could not find 'godot' on \$PATH; consider creating an alias or re-running with the '--install-godot' flag!"
 else
-    info "Ok! Using 'godot' executable: $(which godot)"
+    info "  > Ok! Using 'godot' executable: $(which godot)"
 fi
 
 # Check with the user if it's okay to download 'godot'
@@ -190,7 +190,7 @@ echo ""
 info "Checking for a 'gut' addon install..."
 
 if [[ ! -f "$SCRIPT_DIR/addons/gut/plugin.cfg" ]]; then
-    info "No installation of 'gut' found; installing now..."
+    info "  > No installation of 'gut' found; installing now..."
     echo ""
 
     INSTALL_DIR=$(mktemp -d)
@@ -208,9 +208,9 @@ if [[ ! -f "$SCRIPT_DIR/addons/gut/plugin.cfg" ]]; then
     mv "${INSTALL_DIR}/Gut-${GUT_VERSION}/addons/gut" "${SCRIPT_DIR}/addons"
 
     echo ""
-    info "Successfully installed the 'gut' addon!"
+    info "  > Successfully installed the 'gut' addon!"
 else
-    info "Found existing installation of 'gut'; skipping install!"
+    info "  > Found existing installation of 'gut'; skipping install!"
 fi
 
 # ---------------------------- Install: GDToolkit ---------------------------- #
@@ -235,25 +235,25 @@ GDTK_MINOR_VERSION="$(echo $GDTK_VERSION | sed 's/^[[:digit:]]\+.\(.*\).[[:digit
 GDTK_INSTALL_REQUIRED=1
 GDTK_UPDATE_REQUIRED=0
 if [[ "$GDTK_VERSION" == "0.0.0" ]]; then
-    info "No installation  of 'gdtoolkit' found; installing now..."
+    info "  > No installation  of 'gdtoolkit' found; installing now..."
     echo ""
 elif [[ 
     "$GDTK_MAJOR_VERSION" -lt "$GDTK_MAJOR_VERSION_LATEST" ||
     "$GDTK_MINOR_VERSION" -lt "$GDTK_MINOR_VERSION_LATEST" ]] \
     ; then
     GDTK_UPDATE_REQUIRED=1
-    debug "Found version '$GDTK_VERSION', but latest was '$GDTK_VERSION_LATEST'."
-    info "Out of date installation 'gdtoolkit==${GDTK_VERSION}' found; updating now..."
+    debug " > Found version '$GDTK_VERSION', but latest was '$GDTK_VERSION_LATEST'."
+    info "  > Out of date installation 'gdtoolkit==${GDTK_VERSION}' found; updating now..."
     echo ""
 else
     GDTK_INSTALL_REQUIRED=0
-    info "Found existing installation of 'gdtoolkit'; skipping install!"
+    info "  > Found existing installation of 'gdtoolkit'; skipping install!"
 fi
 
 if [[ "$GDTK_INSTALL_REQUIRED" -eq 1 ]]; then
     while true; do
         if [[ "${ACCEPT}" -eq 0 ]]; then
-            read -p "Installing/updating 'gdtoolkit' using '$(which python3) -m pip'; is this okay?" yn
+            read -p "   > Installing/updating 'gdtoolkit' using '$(which python3) -m pip'; is this okay?" yn
         else
             yn=Y
         fi
@@ -264,10 +264,10 @@ if [[ "$GDTK_INSTALL_REQUIRED" -eq 1 ]]; then
             break
             ;;
         [Nn]*)
-            warn "Skipping 'gdtoolkit' install; code formatting and linting may not be available!"
+            warn "  > Skipping 'gdtoolkit' install; code formatting and linting may not be available!"
             break
             ;;
-        *) msg "Please answer yes or no." ;;
+        *) msg "    > Please answer yes or no." ;;
         esac
     done
 fi
