@@ -1,0 +1,60 @@
+name: merge-pr
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    outputs:
+      has_plugin_change: ${{ steps.check-plugin.outputs.any_modified }}
+      has_gdscript_change: ${{ steps.check-gdscript.outputs.any_modified }}
+
+    steps:
+      - uses: actions/checkout@v3.5.0
+        with:
+          fetch-depth: 2
+
+      - name: Check for changes to plugin implementation
+        id: check-plugin
+        uses: tj-actions/changed-files@v35.7.6
+        with:
+          files: |
+            addons/**/*
+            tests/**/*
+
+      - name: Check for changes to any 'GDScript' file
+        id: check-gdscript
+        uses: tj-actions/changed-files@v35.7.6
+        with:
+          files: |
+            **/*.gd
+
+  test_plugin:
+    needs: [detect_changes]
+    if: needs.detect_changes.outputs.has_plugin_change
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    strategy:
+      fail-fast: false # do not exit early
+      matrix:
+        version: [4.0.1]
+
+    steps:
+      - uses: actions/checkout@v3.5.0
+
+      - name: Download the 'Godot' executable
+        uses: "./.github/actions/setup-godot"
+        with:
+          version: ${{ matrix.version }}
+
+      -
