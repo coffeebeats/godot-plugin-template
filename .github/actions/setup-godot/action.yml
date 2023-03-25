@@ -26,21 +26,12 @@ runs:
 
     - name: Download the 'Godot' executable
       if: steps.cache-godot.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p ${{ inputs.install_dir }}
-
-        GODOT_DOWNLOAD_URL="https://github.com/godotengine/godot/releases/download/${{ inputs.version }}-stable/Godot_v${{ inputs.version }}-stable_linux.x86_64.zip"
-        GODOT_FILENAME=$(basename $GODOT_DOWNLOAD_URL .zip)
-        curl -LO $GODOT_DOWNLOAD_URL
-        unzip "${GODOT_FILENAME}.zip" -d ${{ inputs.install_dir }}
-
-        mv ${{ inputs.install_dir }}/$GODOT_FILENAME ${{ inputs.install_dir }}/godot
-        chmod +x ${{ inputs.install_dir }}/godot
+      run: ./bin/install-godot.sh -y -o ${{ inputs.install_dir }}/godot ${{ inputs.version }}
 
     - name: Modify system '$PATH' variable
       if: inputs.modify_path == 'true'
       shell: bash
-      run: echo "${{ inputs.install_dir }}/godot" >> $GITHUB_PATH
+      run: echo "${{ inputs.install_dir }}" >> $GITHUB_PATH
 
     - name: Validate 'Godot' executable was set up correctly
       shell: bash
