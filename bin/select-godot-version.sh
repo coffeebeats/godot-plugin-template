@@ -56,7 +56,7 @@ check_cmd() {
 
 usage() {
     cat <<EOF
-Detects the major and minor version of 'Godot', given a 'project.godot' file.
+Selects the major and minor version of 'Godot', given a 'project.godot' file.
 
 NOTE: This behavior is best-effort. There is no reliable and canonical way to
 extract a version from all 'Godot' project files. If there is no version
@@ -68,7 +68,8 @@ Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [PROJECT FILE]
 Available options:
     -h, --help              Print this help and exit
     -v, --verbose           Print script debug info
-    --godot <FILE>          A filepath or command name for 'Godot' (used to parse the config file).
+    --godot <FILE>          A path to a 'Godot' executable for parsing
+    -s, --strict            Fail if no version can be parsed from 'project.godot' (default=false)
 
 Project file:
     path/to/project.godot
@@ -79,11 +80,14 @@ EOF
 parse_params() {
     ACCEPT=0
     GODOT_BIN=""
+    STRICT=0
 
     while :; do
         case "${1-}" in
         -h | --help) usage ;;
         -v | --verbose) set -x ;;
+
+        -s | --strict) STRICT=1 ;;
 
         --godot)
             GODOT_BIN="${2-}"
@@ -97,15 +101,17 @@ parse_params() {
     done
 
     args=("$@")
-
     # check required params and arguments
     [[ ${#args[@]} -eq 0 ]] && die "Missing argument: 'path/to/project.godot'"
+
     [[ ! -z "$GODOT_BIN" && ! -x "$GODOT_BIN" ]] && die "Invalid parameter: 'godot' (expected executable)"
 
     PROJECT_FILE="$(cd $(dirname "${args[0]}") && pwd)/$(basename "${args[0]}")"
     if [[ ! -f "$PROJECT_FILE" || "$PROJECT_FILE" != *"/project.godot" ]]; then
         die "Invalid argument; expected a path to a 'project.godot' file, but was: ${args[0]}"
     fi
+
+    GODOT_BIN="${GODOT_BIN:-$($SCRIPT_DIR/find-godot.sh)}"
 
     return 0
 }
@@ -115,10 +121,6 @@ parse_params "$@"
 VERSION=0
 if [[ ! -z "$GODOT_BIN" ]]; then
     extract_version_from_config_with_executable $PROJECT_FILE "$GODOT_BIN"
-elif command -v godot >/dev/null 2>&1; then
-    extract_version_from_config_with_executable $PROJECT_FILE godot
-elif [[ -x "$PWD/godot" ]]; then
-    extract_version_from_config_with_executable $PROJECT_FILE "$PWD/godot"
 else
     VERSION=$(grep '^config/features' $PROJECT_FILE | sed 's/.*"\(.*\)".*/\1/') || :
     [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?(-[a-z]+)?$ ]] && VERSION=0 || :
@@ -127,6 +129,11 @@ fi
 if [[ ! -z "$VERSION" && "$VERSION" != "0" ]]; then
     echo "$VERSION"
     exit 0
+fi
+
+# Failed to parse a version from 'project.godot' - fail if in "strict" mode
+if [[ "$STRICT" -eq 1 ]]; then
+    exit 1
 fi
 
 need_cmd curl
