@@ -43,14 +43,14 @@ Downloads and extracts the specified *stable* version of 'Godot'.
 Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [VERSION]
 
 Available options:
--h, --help          Print this help and exit
--v, --verbose       Print script debug info
--o, --out <FILE>    The filepath of the extracted executable (default=./godot)
--y, --yes           Automatically accept overwrite prompts (default=false)
+    -h, --help          Print this help and exit
+    -v, --verbose       Print script debug info
+    -o, --out <FILE>    The filepath of the extracted executable (default=./godot)
+    -y, --yes           Automatically accept overwrite prompts (default=false)
 
 Supported version strings:
-MAJOR.MINOR.PATCH[-LABEL] (e.g. 4.0.0 or 4.0.0-stable)
-MAJOR.MINOR[-LABEL] (e.g. 4.0 or 4.0-stable)
+    MAJOR.MINOR.PATCH[-LABEL] (e.g. 4.0.0 or 4.0.0-stable)
+    MAJOR.MINOR[-LABEL] (e.g. 4.0 or 4.0-stable)
 EOF
     exit
 }
@@ -102,10 +102,14 @@ echo ""
 
 # ------------------------ Check for existing download ----------------------- #
 
-msg "   > checking for existing 'godot' install..."
+msg "   > checking for existing 'godot' executable..."
 
-# If out file already exists, check before overwriting.
-if [[ -f "$OUT_FILE" ]]; then
+# If an existing executable is found, check before continuing.
+if command -v godot >/dev/null 2>&1 && [[ "$(godot --version)" == "${VERSION%-*}"* ]]; then
+    die "   > skipping 'Godot' download; existing executable is the correct version: $(which godot)" 0
+elif [[ -x $OUT_FILE && "$($OUT_FILE --version || :)" == "${VERSION%-*}"* ]]; then
+    die "   > skipping 'Godot' download; existing executable is the correct version: $OUT_FILE" 0
+elif [[ -f $OUT_FILE ]]; then
     while true; do
         if [[ "${ACCEPT}" -eq 0 ]]; then
             read -p "   > existing file '$OUT_FILE' found; okay to overwrite?" yn
@@ -147,7 +151,7 @@ echo ""
 
 # extract the source archive
 DOWNLOAD_BASENAME="$(basename $DOWNLOAD_URL)"
-(cd $INSTALL_DIR && unzip $DOWNLOAD_BASENAME && rm $DOWNLOAD_BASENAME && ls) || die "Failed to extract '$DOWNLOAD_BASENAME'!"
+(cd $INSTALL_DIR && unzip $DOWNLOAD_BASENAME && rm $DOWNLOAD_BASENAME) || die "Failed to extract '$DOWNLOAD_BASENAME'!"
 echo ""
 
 # move the executable to the correct location
