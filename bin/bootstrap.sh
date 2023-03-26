@@ -46,6 +46,16 @@ die() {
     exit "$code"
 }
 
+# ------------------------- Define: Utility functions ------------------------ #
+
+find_godot_executable() {
+    if [[ -x "$PWD/godot" ]]; then
+        echo "$PWD/godot"
+    elif command -v godot >/dev/null 2>&1; then
+        echo "godot"
+    fi
+}
+
 # ------------------------- Define: Script Arguments ------------------------- #
 
 usage() {
@@ -105,12 +115,14 @@ info "Bootstrapping the repository for development..."
 echo ""
 info "Installing 'Godot' executable..."
 
-# determine the correct version to install (use strict because 'project.godot'
-# is expected to be well-configured)
-GODOT_VERSION=$(./bin/select-godot-version.sh --strict $PWD/project.godot)
+# determine the correct version to install
+GODOT_VERSION=$(./bin/utils/parse-godot-version.sh $PWD/project.godot)
+if [[ -z "$GODOT_VERSION" ]]; then
+    die "Failed to parse version from '$PWD/project.godot'!"
+fi
 
 # install the correct version
-./bin/install-godot.sh \
+./bin/install/godot.sh \
     $([[ "$ACCEPT" -eq 1 ]] && echo "-y") \
     -o $PWD/godot \
     $GODOT_VERSION
@@ -121,7 +133,10 @@ echo ""
 info "Installing the 'Gut' testing addon..."
 
 # determine the correct version to install
-GUT_VERSION=$(./bin/select-gut-version.sh)
+GUT_VERSION=$(./bin/fetch/gut-version.sh)
+if [[ -z "$GUT_VERSION" ]]; then
+    die "Failed to find the latest 'Gut' version!"
+fi
 
 # if the currently installed version (if any) doesn't match, update it
 GUT_DIR="$PWD/addons/gut"
@@ -131,7 +146,7 @@ if [[
     "$(cat "$GUT_DIR/plugin.cfg" | grep "version=\"$GUT_VERSION\"" | sed 's/version=\"\([[:digit:]].[[:digit:]].[[:digit:]]\)\"/\1/')" != "$GUT_VERSION" ]] \
     ; then
     # install the correct version
-    ./bin/install-gut.sh \
+    ./bin/install/gut.sh \
         $([[ "$ACCEPT" -eq 1 ]] && echo "-y") \
         -o $PWD/addons \
         $GUT_VERSION
@@ -144,7 +159,7 @@ fi
 echo ""
 info "Installing the 'GDToolkit' formatting and linting library..."
 
-./bin/install-gdtoolkit.sh "latest"
+./bin/install/gdtoolkit.sh "latest"
 
 # --------------------- Build: '.godot' import directory --------------------- #
 
@@ -152,7 +167,11 @@ if [[ ! -d ".godot" ]]; then
     echo ""
     info "No '.godot' import directory found; generating now..."
 
-    GODOT_BIN="$($SCRIPT_DIR/find-godot.sh --fail-on-missing)"
+    GODOT_BIN="$($SCRIPT_DIR/utils/find-godot.sh)"
+    if [[ -z "$GODOT_BIN" ]]; then
+        die "Failed to find a 'Godot' executable!"
+    fi
+
     $GODOT_BIN --headless --editor --quit >/dev/null 2>&1
 
     info "Successfully generated '.godot' import directory!"

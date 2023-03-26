@@ -59,8 +59,6 @@ EOF
 }
 
 parse_params() {
-    ACCEPT=0
-
     while :; do
         case "${1-}" in
         -h | --help) usage ;;

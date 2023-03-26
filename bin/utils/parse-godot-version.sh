@@ -56,12 +56,10 @@ check_cmd() {
 
 usage() {
     cat <<EOF
-Selects the major and minor version of 'Godot', given a 'project.godot' file.
+Parses the major and minor version of 'Godot', given a 'project.godot' file.
 
 NOTE: This behavior is best-effort. There is no reliable and canonical way to
-extract a version from all 'Godot' project files. If there is no version
-specified in the config, or parsing fails, then the latest release will be
-determined from GitHub.
+extract a version from all 'Godot' project files.
 
 Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [PROJECT FILE]
 
@@ -78,7 +76,6 @@ EOF
 }
 
 parse_params() {
-    ACCEPT=0
     GODOT_BIN=""
     STRICT=0
 
@@ -135,27 +132,3 @@ fi
 if [[ "$STRICT" -eq 1 ]]; then
     exit 1
 fi
-
-need_cmd curl
-need_cmd python3
-
-PYTHON_SCRIPT=$(
-    cat <<EOF
-import sys, json
-
-releases = json.load(sys.stdin)
-if not releases:
-    raise Exception("Failed to fetch releases from GitHub!")
-
-versions = [r["tag_name"].split("-") for r in releases]
-versions = filter(lambda v: v[1] == "stable" and len(v[0].split(".")) == 3, versions)
-versions = sorted(versions, key=lambda v: tuple(int(n) for n in v[0].split(".")))
-print("-".join(versions[-1]))
-EOF
-)
-
-curl -sL \
-    -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    https://api.github.com/repos/godotengine/godot/releases\?per_page=25 |
-    python3 -c "$PYTHON_SCRIPT"

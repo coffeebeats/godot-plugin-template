@@ -38,7 +38,7 @@ check_cmd() {
 
 usage() {
     cat <<EOF
-Downloads and extracts the specified *stable* version of 'Godot'.
+Downloads and extracts the specified version of 'Godot'.
 
 Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [VERSION]
 

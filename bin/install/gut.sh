@@ -101,7 +101,7 @@ need_cmd unzip
 msg "Downloading and extracting 'Gut@$VERSION' to '$OUT_DIR/gut'..."
 
 if [[ "$VERSION" == "latest" ]]; then
-    VERSION="$($SCRIPT_DIR/find-gut-version.sh)"
+    VERSION="$($SCRIPT_DIR/../fetch/gut-version.sh)"
 fi
 
 # ------------------------ Check for existing download ----------------------- #
