@@ -12,3 +12,4 @@ config_version=5
 
 config/name="godot-plugin-template"
 config/features=PackedStringArray("4.0")
+config/icon="res://icon.svg"
