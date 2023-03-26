@@ -46,15 +46,14 @@ https://pypi.org/project/gdtoolkit/ for details.
 Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [VERSION]
 
 Available options:
--h, --help              Print this help and exit
--v, --verbose           Print script debug info
--y, --yes               Automatically accept overwrite prompts (default=false)
+    -h, --help              Print this help and exit
+    -v, --verbose           Print script debug info
 
 Supported version strings:
-latest (default)
-MAJOR.MINOR.PATCH (e.g. 4.0.0)
-MAJOR.MINOR (e.g. 4.0)
-MAJOR (e.g. 4)
+    latest (default)
+    MAJOR.MINOR.PATCH (e.g. 4.0.0)
+    MAJOR.MINOR (e.g. 4.0)
+    MAJOR (e.g. 4)
 EOF
     exit
 }
@@ -66,8 +65,6 @@ parse_params() {
         case "${1-}" in
         -h | --help) usage ;;
         -v | --verbose) set -x ;;
-
-        -y | --yes) ACCEPT=1 ;;
 
         -?*) die "Unknown option: $1" ;;
         *) break ;;
