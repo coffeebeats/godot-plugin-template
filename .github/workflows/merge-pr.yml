@@ -104,6 +104,11 @@ jobs:
         with:
           version: ${{ matrix.version }}
 
+      - name: Download the 'Gut' testing addon
+        uses: "./.github/actions/setup-gut"
+        with:
+          version: latest
+
       - name: Cache the '.godot' import directory
         id: cache-imports
         uses: actions/cache@v3.3.1
@@ -117,11 +122,6 @@ jobs:
         if: steps.cache-imports.outputs.cache-hit != 'true'
         shell: bash
         run: godot --headless -e -q
-
-      - name: Download the 'Gut' testing addon
-        uses: "./.github/actions/setup-gut"
-        with:
-          version: latest
 
       - name: Test plugin source
         shell: bash
