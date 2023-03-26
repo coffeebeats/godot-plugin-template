@@ -84,9 +84,11 @@ parse_params() {
     [[ -f "$OUT_DIR" || -f "${OUT_DIR%/gut}" ]] && die "Invalid parameter: 'out' (expected a directory, not a file)"
     OUT_DIR="${OUT_DIR%/gut}"
 
-    [[ ${#args[@]} -eq 0 ]] && die "Missing argument: 'version'"
-    [[ ! "${args[0]}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]] && die "Invalid version string: '${args[0]}'"
-    VERSION="${args[0]#v}"
+    VERSION="${args[0]:-latest}"
+    VERSION="${VERSION#v}"
+    if [[ "$VERSION" != "latest" && ! "$VERSION" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        die "Invalid version string: '$VERSION'"
+    fi
 
     return 0
 }
@@ -97,7 +99,10 @@ need_cmd curl
 need_cmd unzip
 
 msg "Downloading and extracting 'Gut@$VERSION' to '$OUT_DIR/gut'..."
-echo ""
+
+if [[ "$VERSION" == "latest" ]]; then
+    VERSION="$($SCRIPT_DIR/find-gut-version.sh)"
+fi
 
 # ------------------------ Check for existing download ----------------------- #
 
@@ -105,6 +110,11 @@ msg "   > checking for existing 'Gut' download..."
 
 # If out file already exists, check before overwriting.
 if [[ -d "$OUT_DIR/gut" ]]; then
+    GUT_CONFIG_FILE="$OUT_DIR/gut/plugin.cfg"
+    if [[ -f "$GUT_CONFIG_FILE" ]] && grep "version=\"$VERSION\"" $GUT_CONFIG_FILE >/dev/null 2>&1; then
+        die "   > skipping 'Gut' download; existing download is the correct version: $OUT_DIR/gut" 0
+    fi
+
     while true; do
         if [[ "${ACCEPT}" -eq 0 ]]; then
             read -p "   > existing directory '$OUT_DIR/gut' found; okay to overwrite?" yn

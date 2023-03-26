@@ -76,7 +76,7 @@ parse_params() {
 
     # check required params and arguments
     VERSION="${args[0]:-latest}"
-    if [[ ! "$VERSION" =~ ^[0-9]+(\.[0-9]+)?(\.[0-9]+)?$ && "$VERSION" != "latest" ]]; then
+    if [[ "$VERSION" != "latest" && ! "$VERSION" =~ ^[0-9]+(\.[0-9]+)?(\.[0-9]+)?$ ]]; then
         die "Invalid version string: '$VERSION'"
     fi
 
