@@ -106,7 +106,7 @@ echo ""
 info "Installing 'Godot' executable..."
 
 # determine the correct version to install
-GODOT_VERSION=$(./bin/detect-godot-version.sh $PWD/project.godot)
+GODOT_VERSION=$(./bin/find-godot-version.sh $PWD/project.godot)
 
 # install the correct version
 ./bin/install-godot.sh \
@@ -120,7 +120,7 @@ echo ""
 info "Installing the 'Gut' testing addon..."
 
 # determine the correct version to install
-GUT_VERSION=$(./bin/detect-gut-version.sh)
+GUT_VERSION=$(./bin/find-gut-version.sh)
 
 # if the currently installed version (if any) doesn't match, update it
 GUT_DIR="$PWD/addons/gut"
