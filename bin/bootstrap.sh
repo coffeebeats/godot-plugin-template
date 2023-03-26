@@ -100,13 +100,14 @@ fi
 
 info "Bootstrapping the repository for development..."
 
-# ------------------------------- Check: Godot ------------------------------- #
+# ------------------------------ Install: Godot ------------------------------ #
 
 echo ""
 info "Installing 'Godot' executable..."
 
-# determine the correct version to install
-GODOT_VERSION=$(./bin/find-godot-version.sh $PWD/project.godot)
+# determine the correct version to install (use strict because 'project.godot'
+# is expected to be well-configured)
+GODOT_VERSION=$(./bin/select-godot-version.sh --strict $PWD/project.godot)
 
 # install the correct version
 ./bin/install-godot.sh \
@@ -120,7 +121,7 @@ echo ""
 info "Installing the 'Gut' testing addon..."
 
 # determine the correct version to install
-GUT_VERSION=$(./bin/find-gut-version.sh)
+GUT_VERSION=$(./bin/select-gut-version.sh)
 
 # if the currently installed version (if any) doesn't match, update it
 GUT_DIR="$PWD/addons/gut"
@@ -144,6 +145,21 @@ echo ""
 info "Installing the 'GDToolkit' formatting and linting library..."
 
 ./bin/install-gdtoolkit.sh "latest"
+
+# --------------------- Build: '.godot' import directory --------------------- #
+
+if [[ ! -d ".godot" ]]; then
+    echo ""
+    info "No '.godot' import directory found; generating now..."
+
+    GODOT_BIN="$($SCRIPT_DIR/find-godot.sh --fail-on-missing)"
+    $GODOT_BIN --headless --editor --quit >/dev/null 2>&1
+
+    info "Successfully generated '.godot' import directory!"
+else
+    echo ""
+    info "Found an existing '.godot' import directory; skipping re-import process..."
+fi
 
 # ---------------------------------------------------------------------------- #
 
