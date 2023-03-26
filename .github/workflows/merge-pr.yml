@@ -104,12 +104,27 @@ jobs:
         with:
           version: ${{ matrix.version }}
 
+      - name: Cache the '.godot' import directory
+        id: cache-imports
+        uses: actions/cache@v3.3.1
+        with:
+          path: .godot
+          key: imports-${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('addons/**/*', 'examples/**/*', 'tests/**/*', 'project.godot') }}
+          restore-keys: |
+            imports-${{ runner.os }}-${{ matrix.version }}
+
+      - name: Generate '.godot' import directory
+        if: steps.cache-imports.outputs.cache-hit != 'true'
+        shell: bash
+        run: godot --headless -e -q
+
       - name: Download the 'Gut' testing addon
         uses: "./.github/actions/setup-gut"
         with:
           version: latest
 
       - name: Test plugin source
+        shell: bash
         run: |
           godot \
           --headless \
