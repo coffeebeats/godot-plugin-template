@@ -44,13 +44,13 @@ https://github.com/bitwes/Gut for details.
 Usage: $(basename "${BASH_SOURCE[0]}") [OPTIONS] [VERSION]
 
 Available options:
--h, --help              Print this help and exit
--v, --verbose           Print script debug info
--o, --out <DIRECTORY>   Which directory to extract the addon into (default=./addons)
--y, --yes               Automatically accept overwrite prompts (default=false)
+    -h, --help              Print this help and exit
+    -v, --verbose           Print script debug info
+    -o, --out <DIRECTORY>   Which directory to extract the addon into (default=./addons)
+    -y, --yes               Automatically accept overwrite prompts (default=false)
 
 Supported version strings:
-[v]MAJOR.MINOR.PATCH (e.g. 4.0.0 or v4.0.0)
+    [v]MAJOR.MINOR.PATCH (e.g. 4.0.0 or v4.0.0)
 EOF
     exit
 }
@@ -143,7 +143,7 @@ echo ""
 
 # move the executable to the correct location
 mkdir -p "$OUT_DIR"
-[[ -d "$OUT_DIR/gut" ]] && rm -rf "$OUT_DIR/gut" || die "Failed to remove existing directory: $OUT_DIR"
+[[ -d "$OUT_DIR/gut" ]] && (rm -rf "$OUT_DIR/gut" || die "Failed to remove existing directory: $OUT_DIR/gut")
 mv "$INSTALL_DIR/Gut-${VERSION}/addons/gut" $OUT_DIR
 
 msg "Successfully installed 'Gut'!"
