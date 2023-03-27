@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/coffeebeats/godot-plugin-template/compare/v0.1.0...v0.1.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* **ci:** ensure 'addons' is properly exported ([#12](https://github.com/coffeebeats/godot-plugin-template/issues/12)) ([5585153](https://github.com/coffeebeats/godot-plugin-template/commit/55851535885340f88233ce447ff9613bca820f55))
+
 ## 0.1.0 (2023-03-27)
 
 
