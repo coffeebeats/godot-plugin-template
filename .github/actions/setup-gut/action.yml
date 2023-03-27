@@ -22,4 +22,5 @@ runs:
 
     - name: Download the 'Gut' addon
       if: steps.cache-godot.outputs.cache-hit != 'true'
+      shell: bash
       run: ./bin/install/gut.sh -y -o ${{ inputs.addons_dir }}/gut ${{ inputs.version }}
