@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false # do not exit early
       matrix:
-        version: [4.0] # TODO: make this derived from 'project.godot'
+        version: ["4.0"] # TODO: make this derived from 'project.godot'
 
     steps:
       - uses: actions/checkout@v3.5.0
@@ -93,7 +93,7 @@ jobs:
     strategy:
       fail-fast: false # do not exit early
       matrix:
-        version: [4.0] # TODO: make this derived from 'project.godot'
+        version: ["4.0"] # TODO: make this derived from 'project.godot'
 
     steps:
       - uses: actions/checkout@v3.5.0
