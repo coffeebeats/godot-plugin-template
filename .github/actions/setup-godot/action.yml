@@ -1,0 +1,52 @@
+name: "Set Up Godot"
+description: "Downloads the specified version of 'Godot' and caches it."
+
+inputs:
+  version:
+    description: "The version of 'Godot' to download."
+    required: true
+  install_dir:
+    description: "The directory to download 'Godot' into."
+    required: false
+    default: "~/.godot"
+  modify_path:
+    description: "Whether to add 'godot' to the $PATH variable."
+    required: false
+    default: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache the 'Godot' executable
+      id: cache-godot
+      uses: actions/cache@v3.3.1
+      with:
+        key: godot-${{ runner.os }}-${{ inputs.version }}
+        path: ${{ inputs.install_dir }}/godot
+
+    - name: Download the 'Godot' executable
+      if: steps.cache-godot.outputs.cache-hit != 'true'
+      shell: bash
+      run: ./bin/install/godot.sh -y -o ${{ inputs.install_dir }}/godot "${{ inputs.version }}"
+
+    - name: Modify system '$PATH' variable
+      if: inputs.modify_path == 'true'
+      shell: bash
+      run: echo "${{ inputs.install_dir }}" >> $GITHUB_PATH
+
+    - name: Validate 'Godot' executable was set up correctly
+      shell: bash
+      run: |
+        if [[ "$(${{ inputs.install_dir }}/godot --version)" != "${{ inputs.version }}"* ]]; then
+          echo "Failed to install 'godot@v${{ inputs.version }}'!"
+          exit 1
+        fi
+
+        if [[ \
+          "${{ inputs.modify_path }}" == "true" && \
+          "$(command -v godot >/dev/null; echo $?)" -ne 0 || \
+          "$(godot --version)" != "${{ inputs.version }}"* \
+        ]]; then
+          echo "Failed to add 'godot' to \$PATH!"
+          exit 1
+        fi

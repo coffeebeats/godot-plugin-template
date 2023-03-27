@@ -1,0 +1,26 @@
+name: "Set Up Gut"
+description: "Downloads the specified version of the 'Gut' addon and caches it."
+
+inputs:
+  version:
+    description: "The version of 'Gut' to download."
+    required: true
+  addons_dir:
+    description: "The 'addons' directory to download 'Gut' into."
+    required: false
+    default: "addons"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache the 'Gut' directory
+      id: cache-gut
+      uses: actions/cache@v3.3.1
+      with:
+        key: gut-${{ runner.os }}-${{ inputs.version }}
+        path: ${{ inputs.addons_dir }}/gut
+
+    - name: Download the 'Gut' addon
+      if: steps.cache-godot.outputs.cache-hit != 'true'
+      shell: bash
+      run: ./bin/install/gut.sh -y -o ${{ inputs.addons_dir }}/gut ${{ inputs.version }}
