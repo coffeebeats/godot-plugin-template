@@ -61,9 +61,9 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install the 'gdtoolkit' library
-        uses: "./.github/actions/setup-gdtoolkit"
+        shell: "bash"
         with:
-          version: latest
+          version: ./bin/install/gdtoolkit.sh latest
 
       - name: Check formatting (source)
         id: format-project
