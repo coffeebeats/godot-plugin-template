@@ -1,9 +1,6 @@
 # Normalize line endings for all text files.
 * text=auto eol=lf
 
-# Ignore non-production files when exporting the source code.
-/.github export-ignore
-/.gitignore export-ignore
-/README.md export-ignore
-/examples export-ignore
-/tests export-ignore
+# Exclude everything except the addon when releasing.
+* export-ignore
+addons -export-ignore
