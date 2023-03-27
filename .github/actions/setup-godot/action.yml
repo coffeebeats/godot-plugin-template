@@ -45,7 +45,7 @@ runs:
         if [[ \
           "${{ inputs.modify_path }}" == "true" && \
           "$(command -v godot >/dev/null; echo $?)" -ne 0 || \
-          "$(godot --version)" != "${{ inputs.version }}" \
+          "$(godot --version)" != "${{ inputs.version }}"* \
         ]]; then
           echo "Failed to add 'godot' to \$PATH!"
           exit 1
