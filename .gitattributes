@@ -4,3 +4,4 @@
 # Exclude everything except the addon when releasing.
 * export-ignore
 addons -export-ignore
+addons/** -export-ignore
