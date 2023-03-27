@@ -88,7 +88,7 @@ jobs:
     if: needs.detect_changes.outputs.has_plugin_change
 
     runs-on: ubuntu-latest
-    timeout-minutes: 24
+    timeout-minutes: 8
 
     strategy:
       fail-fast: false # do not exit early
@@ -120,7 +120,7 @@ jobs:
       - name: Generate '.godot' import directory
         if: steps.cache-imports.outputs.cache-hit != 'true'
         shell: bash
-        run: godot --headless -e -q
+        run: godot --headless --editor --quit
 
       - name: Test plugin source
         shell: bash
