@@ -27,7 +27,7 @@ runs:
     - name: Download the 'Godot' executable
       if: steps.cache-godot.outputs.cache-hit != 'true'
       shell: bash
-      run: ./bin/install-godot.sh -y -o ${{ inputs.install_dir }}/godot ${{ inputs.version }}
+      run: ./bin/install/godot.sh -y -o ${{ inputs.install_dir }}/godot ${{ inputs.version }}
 
     - name: Modify system '$PATH' variable
       if: inputs.modify_path == 'true'
