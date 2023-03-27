@@ -18,6 +18,8 @@ jobs:
           default-branch: main
           release-type: simple
 
+          release-as: 0.1.0 # TODO: Remove after initial Release PR.
+
           # TODO: Once plugin API stabilizes, switch these to 'false'.
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
