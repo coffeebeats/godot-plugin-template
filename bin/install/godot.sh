@@ -104,6 +104,9 @@ echo ""
 
 msg "   > checking for existing 'godot' executable..."
 
+# TODO: This check is flawed because $(godot --version) uses a different format
+# than the git tags.
+
 # If an existing executable is found, check before continuing.
 if command -v godot >/dev/null 2>&1 && [[ "$(godot --version)" == "${VERSION%-*}"* ]]; then
     die "   > skipping 'Godot' download; existing executable is the correct version: $(which godot)" 0

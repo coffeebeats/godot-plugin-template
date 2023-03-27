@@ -101,7 +101,7 @@ jobs:
       - name: Download the 'Godot' executable
         uses: "./.github/actions/setup-godot"
         with:
-          version: ${{ matrix.version }}
+          version: "${{ matrix.version }}"
 
       - name: Download the 'Gut' testing addon
         uses: "./.github/actions/setup-gut"
