@@ -37,7 +37,7 @@ runs:
     - name: Validate 'Godot' executable was set up correctly
       shell: bash
       run: |
-        if [[ "$(${{ inputs.install_dir }}/godot --version)" != "${{ inputs.version }}" ]]; then
+        if [[ "$(${{ inputs.install_dir }}/godot --version)" != "${{ inputs.version }}"* ]]; then
           echo "Failed to install 'godot@v${{ inputs.version }}'!"
           exit 1
         fi
