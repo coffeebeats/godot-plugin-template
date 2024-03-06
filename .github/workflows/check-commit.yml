@@ -1,0 +1,195 @@
+name: "🤖 Check: Commit"
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    outputs:
+      has_change: "${{ steps.check-non-source.outputs.any_modified || steps.check-source.outputs.any_modified }}"
+      has_source_change: "${{ steps.check-source.outputs.any_modified }}"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for any non-source code changes
+        id: check-non-source
+        uses: tj-actions/changed-files@v42
+        with:
+          files: "**/*"
+          files_ignore: "**/*.gd"
+
+      - name: Check for any source code changes
+        id: check-source
+        uses: tj-actions/changed-files@v42
+        with:
+          files: "**/*.gd"
+
+  format:
+    needs: ["changes"]
+    if: |
+      needs.changes.outputs.has_source_change == 'true' &&
+      github.actor != 'dependabot[bot]'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Checkout the "head_ref" (i.e. PR branch HEAD) in case a commit is
+          # later needed. See https://github.com/stefanzweifel/git-auto-commit-action
+          # for more details.
+          ref: ${{ github.head_ref }}
+          # Use a PAT so that GitHub Actions will trigger on the resulting commit.
+          token: ${{ secrets.ACTIONS_BOT }}
+      
+      - name: Install the 'gdtoolkit' library
+        shell: bash
+        run: python3 -m pip install --upgrade "gdtoolkit==4.*"
+
+      - name: Check formatting
+        id: format
+        continue-on-error: true
+        run: gdformat -l 88 --check **/*.gd
+
+      - name: Fix formatting
+        if: steps.format.outcome == 'failure'
+        run: |
+          gdformat -l 88 **/*.gd
+
+          # See https://github.com/orgs/community/discussions/26560#discussioncomment-3531273
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          git add --all **/*.gd
+          git commit -m "chore: fix formatting (on behalf of '${{ github.triggering_actor }}')"
+
+          git push
+
+      - name: Terminate CI run early
+        if: steps.format.outcome == 'failure'
+        run: exit 1
+
+  lint:
+    needs: ["changes", "format"]
+    if: needs.changes.outputs.has_source_change == 'true'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the 'gdtoolkit' library
+        shell: bash
+        run: python3 -m pip install --upgrade "gdtoolkit==4.*"
+
+      - name: Lint source code
+        run: gdlint **/*.gd
+
+  test:
+    needs: ["changes", "format"]
+    if: needs.changes.outputs.has_change == 'true'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install 'gdenv'
+        uses: coffeebeats/gdenv/.github/actions/setup-gdenv@main
+
+      - name: Install 'godot'
+        run: gdenv install
+      
+      - name: Install 'gdpack'
+        uses: coffeebeats/gdpack/.github/actions/setup-gdpack@main
+      
+        # TODO: Cache installed dependencies outside of the gdpack plugin. This
+        # is so the cache can be invalidated when plugin files change.
+      - name: Install dependencies
+        run: gdpack installmomom
+
+      - name: Test source code
+        run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
+
+      - name: Cache the '.godot' import directory
+        id: cache-imports
+        uses: actions/cache@v3.3.1
+        with:
+          path: .godot
+          key: imports-${{ runner.os }}-${{ hashFiles('.godot-version') }}-${{ hashFiles('**/*') }}
+          restore-keys: |
+            imports-${{ runner.os }}-${{ hashFiles('.godot-version') }}-
+
+      - name: Generate '.godot' import directory
+        if: steps.cache-imports.outputs.cache-hit != 'true'
+        shell: bash
+        run: godot --headless --editor --quit
+      
+      - name: Test plugin
+        shell: bash
+        run: |
+          godot \
+          --headless \
+          --verbose \
+          --path . \
+          -s addons/gut/gut_cmdln.gd \
+            -gdir=res://tests \
+            -ginclude_subdirs \
+            -gexit
+
+  # used to ensure all branch protection requirements are met. This
+  # is a workaround until https://github.com/github-community/community/discussions/4324
+  # is addressed.
+  branch_protection:
+    needs: ["changes", "format", "lint", "test"]
+    if: ${{ always() }}
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Check 'changes' status
+        if: |
+          always() &&
+          needs.changes.result == 'failure' ||
+          needs.changes.result == 'cancelled'
+        run: exit 1
+      - name: Check 'format' status
+        if: |
+          always() &&
+          needs.format.result == 'failure' ||
+          needs.format.result == 'cancelled'
+        run: exit 1
+      - name: Check 'lint' status
+        if: |
+          always() &&
+          needs.lint.result == 'failure' ||
+          needs.lint.result == 'cancelled'
+        run: exit 1
+      - name: Check 'test' status
+        if: |
+          always() &&
+          needs.test.result == 'failure' ||
+          needs.test.result == 'cancelled'
+        run: exit 1
