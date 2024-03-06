@@ -110,27 +110,16 @@ jobs:
     if: needs.changes.outputs.has_change == 'true'
 
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 8
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install 'gdenv'
         uses: coffeebeats/gdenv/.github/actions/setup-gdenv@main
-
-      - name: Install 'godot'
-        run: gdenv install
       
       - name: Install 'gdpack'
         uses: coffeebeats/gdpack/.github/actions/setup-gdpack@main
-      
-        # TODO: Cache installed dependencies outside of the gdpack plugin. This
-        # is so the cache can be invalidated when plugin files change.
-      - name: Install dependencies
-        run: gdpack installmomom
-
-      - name: Test source code
-        run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
 
       - name: Cache the '.godot' import directory
         id: cache-imports
@@ -146,17 +135,20 @@ jobs:
         shell: bash
         run: godot --headless --editor --quit
       
-      - name: Test plugin
+      - name: Test project
         shell: bash
         run: |
           godot \
           --headless \
+          --debug \
           --verbose \
           --path . \
           -s addons/gut/gut_cmdln.gd \
-            -gdir=res://tests \
+            -gexit \
+            -gdir=res:// \
             -ginclude_subdirs \
-            -gexit
+            -gprefix= \
+            -gsuffix=_test.gd
 
   # used to ensure all branch protection requirements are met. This
   # is a workaround until https://github.com/github-community/community/discussions/4324
