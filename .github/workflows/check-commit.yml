@@ -123,7 +123,7 @@ jobs:
 
       - name: Cache the '.godot' import directory
         id: cache-imports
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4.0.1
         with:
           path: .godot
           key: imports-${{ runner.os }}-${{ hashFiles('.godot-version') }}-${{ hashFiles('**/*') }}
