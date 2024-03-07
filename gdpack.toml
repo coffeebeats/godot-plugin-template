@@ -1,0 +1,24 @@
+# Use `gdpack add` to import addon dependencies into your project.
+# 
+# For example:
+#    gdpack add https://github.com/bitwes/Gut --tag v9.1.1 -d
+
+[project]
+  # Include additional script templates from these directories into the project.
+  # The directory structure within the folder pointed to by each pattern will be
+  # merged into this project's 'script_templates' folder.
+  include_script_templates = []
+
+  # Export non-imported script templates found in these directories.
+  export_script_templates = []
+
+  # Exclude files from being installed into dependent projects.
+  export_exclude = [
+    "gdpack.toml",
+    "icon.svg",
+    "icon.svg.import",
+    "project.godot",
+  ]
+
+[dev-addons]
+  Gut = {git = "https://github.com/bitwes/Gut.git", tag = "v9.2.1"}
