@@ -60,7 +60,7 @@ jobs:
           ref: ${{ github.head_ref }}
           # Use a PAT so that GitHub Actions will trigger on the resulting commit.
           token: ${{ secrets.ACTIONS_BOT }}
-      
+
       - name: Install the 'gdtoolkit' library
         shell: bash
         run: python3 -m pip install --upgrade "gdtoolkit==4.*"
@@ -117,13 +117,13 @@ jobs:
 
       - name: Install 'gdenv'
         uses: coffeebeats/gdenv/.github/actions/setup-gdenv@main
-      
+
       - name: Install 'gdpack'
         uses: coffeebeats/gdpack/.github/actions/setup-gdpack@main
 
       - name: Cache the '.godot' import directory
         id: cache-imports
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v4
         with:
           path: .godot
           key: imports-${{ runner.os }}-${{ hashFiles('.godot-version') }}-${{ hashFiles('**/*') }}
@@ -134,7 +134,7 @@ jobs:
         if: steps.cache-imports.outputs.cache-hit != 'true'
         shell: bash
         run: godot --headless --editor --quit
-      
+
       - name: Test project
         shell: bash
         run: |
