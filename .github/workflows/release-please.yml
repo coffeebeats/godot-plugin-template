@@ -28,4 +28,4 @@ jobs:
           #
           # See https://github.com/googleapis/release-please/blob/HEAD/docs/customizing.md#updating-arbitrary-files.
           extra-files: |
-            addons/example-plugin/plugin.cfg
+            plugin.cfg
