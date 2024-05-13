@@ -69,6 +69,10 @@ jobs:
           # Remove testing-related files.
           rm ${{ runner.temp }}/addon/**/*_test.gd
 
+          # Remove development/project-related files.
+          rm ${{ runner.temp }}/addon/project.godot
+          rm ${{ runner.temp }}/addon/icon.*
+
           echo "Addon files to publish:"
           ls -lsa ${{ runner.temp }}/addon
 
