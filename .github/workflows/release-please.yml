@@ -97,7 +97,7 @@ jobs:
           shopt -s extglob
           shopt -s globstar
 
-          rm -rf * .!(|.)*
+          rm -rf * .@(!(.||git))
 
           echo "Target addon workspace (before):"
           ls -lsa .
