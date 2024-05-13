@@ -1,4 +1,4 @@
-name: release-please
+name: "🚀 Release: Plugin version"
 
 on:
   push:
@@ -12,20 +12,103 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    outputs:
+      release-created: ${{ steps.release.outputs.releases_created }}
+      release-tag: ${{ steps.release.outputs.tag_name }}
+
     steps:
-      - uses: google-github-actions/release-please-action@v3.7.5
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/release-please-action@v4
+        id: release
         with:
-          default-branch: main
-          release-type: simple
+          config-file: .release-please/config.json
+          manifest-file: .release-please/manifest.json
 
-          # TODO: Once plugin API stabilizes, switch these to 'false'.
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
+          # NOTE: To handle releases on specific branches (e.g. a '1.X' release branch),
+          # simply change the "branches" filter in the workflow's on-"push" trigger.
+          target-branch: ${{ github.ref_name }}
 
-          # To support 'plugin.cfg', use the generic updater on the file
-          # 'plugin.cfg'. The version must be identified using using an
-          # inline or block comment (e.g. 'x-release-please-version').
-          #
-          # See https://github.com/googleapis/release-please/blob/HEAD/docs/customizing.md#updating-arbitrary-files.
-          extra-files: |
-            plugin.cfg
+      - name: Log release-please action output
+        shell: bash
+        env:
+          # See https://github.com/actions/runner/issues/1656#issuecomment-1030077729.
+          RELEASE_INFO: ${{ toJson(steps.release.outputs) }}
+        run: echo $RELEASE_INFO
+
+  release-branch:
+    needs: ["release-please"]
+    if: needs.release-please.outputs.release-created == 'true'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@main # TODO: Pin this to 'v0'.
+        id: version
+        with:
+          gdenv-pin-path: .godot-version
+
+      - name: Construct addon directory
+        id: addon
+        run: |
+          mkdir ${{ runner.temp }}/addon
+
+          # Set options to enable more extensive globbing.
+          shopt -s extglob
+          shopt -s globstar
+
+          cp -r * ${{ runner.temp }}/addon
+
+          # Remove testing-related files.
+          rm ${{ runner.temp }}/addon/**/*_test.gd
+
+          echo "Addon files to publish:"
+          ls -lsa ${{ runner.temp }}/addon
+
+      - name: Check out to target branch
+        id: branch
+        run: |
+          TARGET_BRANCH="v${{ steps.version.outputs.major-minor }}"
+          BRANCHES=$(git ls-remote --heads origin $TARGET_BRANCH)
+
+          if [[ -z "$BRANCHES" ]]; then
+            git checkout -b $TARGET_BRANCH
+          else
+            git fetch origin +refs/heads/$TARGET_BRANCH:refs/heads/$TARGET_BRANCH
+            git checkout $TARGET_BRANCH
+          fi
+
+          echo "target=$TARGET_BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Push the latest changes to the target branch
+        run: |
+          rm -rf * .*
+
+          echo "Target addon workspace (before):"
+          ls -lsa .
+
+          cp -r ${{ runner.temp }}/addon/* .
+
+          echo "Target addon workspace (after):"
+          ls -lsa .
+
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "Target branch is up-to-date; exiting without making changes."
+            exit 0
+          fi
+
+          # See https://github.com/orgs/community/discussions/26560#discussioncomment-3531273
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          git add --all .
+          git commit -m "chore: updating ${{ github.repository }}@${{ steps.branch.outputs.target }} to ${{ github.sha }} (on behalf of '${{ github.triggering_actor }}')"
+
+          git push origin ${{ steps.branch.outputs.target }}
