@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.4...v0.2.5) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ci:** add missing `-r` flag when deleting directory ([#35](https://github.com/coffeebeats/godot-plugin-template/issues/35)) ([3d26c99](https://github.com/coffeebeats/godot-plugin-template/commit/3d26c99463e5f3c26e2684827f610584103012c9))
+
 ## [0.2.4](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.3...v0.2.4) (2024-05-13)
 
 
