@@ -82,7 +82,7 @@ jobs:
       - name: Check out to target branch
         id: branch
         run: |
-          TARGET_BRANCH="v${{ steps.version.outputs.major-minor }}"
+          TARGET_BRANCH="godot-v${{ steps.version.outputs.major-minor }}"
           BRANCHES=$(git ls-remote --heads origin $TARGET_BRANCH)
 
           if [[ -z "$BRANCHES" ]]; then
