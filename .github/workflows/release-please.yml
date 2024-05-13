@@ -71,7 +71,7 @@ jobs:
           rm ${{ runner.temp }}/addon/icon.*
 
           # Remove all nested addon dependencies.
-          rm -f ${{ runner.temp }}/addon/addons
+          rm -rf ${{ runner.temp }}/addon/addons
 
           # Remove testing-related files.
           rm ${{ runner.temp }}/addon/**/*_test.gd
