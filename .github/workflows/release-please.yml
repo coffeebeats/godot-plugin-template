@@ -102,6 +102,9 @@ jobs:
 
           rm -rf * .@(!(.||git))
 
+          # Remove submodules
+          rm -rf .gitmodules .git/modules
+
           echo "Target addon workspace (before):"
           ls -lsa .
 
