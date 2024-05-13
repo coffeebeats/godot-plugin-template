@@ -93,7 +93,7 @@ jobs:
 
       - name: Push the latest changes to the target branch
         run: |
-          rm -rf * .*
+          rm -rf * .!(|.)*
 
           echo "Target addon workspace (before):"
           ls -lsa .
