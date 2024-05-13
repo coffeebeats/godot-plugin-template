@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.3...v0.2.4) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ci:** don't publish addons, submodules during release ([#33](https://github.com/coffeebeats/godot-plugin-template/issues/33)) ([d4ddef7](https://github.com/coffeebeats/godot-plugin-template/commit/d4ddef79473a7521fc1d5aa6f9461235aa5b3937))
+
 ## [0.2.3](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.2...v0.2.3) (2024-05-13)
 
 
