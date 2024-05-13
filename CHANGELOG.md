@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.0...v0.2.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ci:** don't delete `.` or `..` when creating addon ([#27](https://github.com/coffeebeats/godot-plugin-template/issues/27)) ([4e735f0](https://github.com/coffeebeats/godot-plugin-template/commit/4e735f01a4a7dd9893ff83de31ad4e43baedd200))
+
 ## [0.2.0](https://github.com/coffeebeats/godot-plugin-template/compare/v0.1.1...v0.2.0) (2024-05-13)
 
 
