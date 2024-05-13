@@ -1,12 +1,11 @@
 # Godot-specific ignores
-.godot
-.import
-export_presets.cfg
-export.cfg
+.godot/
 
-# Mono-specific ignores
-.mono
-data_*
+# Imported translations (automatically generated from CSV files)
+*.translation
 
-# Plugin-specific ignores
-addons
+# MacOS-specific ignores
+.DS_Store
+
+# Testing-related ignores
+# ...

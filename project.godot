@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="plugin-development"
-config/features=PackedStringArray("4.0")
+config/name="plugin"
+config/features=PackedStringArray("4.2")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [rendering]
 
