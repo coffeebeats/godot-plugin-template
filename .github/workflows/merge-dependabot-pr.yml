@@ -1,4 +1,4 @@
-name: "🤖 Merge: Dependabot PR"
+name: "🔧 Merge: Dependabot PR"
 
 on:
   pull_request:
