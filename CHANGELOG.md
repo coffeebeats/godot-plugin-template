@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.1...v0.2.2) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ci:** enable `extglob` prior to using extended glob patterns ([#29](https://github.com/coffeebeats/godot-plugin-template/issues/29)) ([4263c6b](https://github.com/coffeebeats/godot-plugin-template/commit/4263c6b267e44cedf98fd6772e382b93ddc83871))
+
 ## [0.2.1](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.0...v0.2.1) (2024-05-13)
 
 
