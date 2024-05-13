@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.2...v0.2.3) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ci:** keep `.git` folder when deleting old files ([#31](https://github.com/coffeebeats/godot-plugin-template/issues/31)) ([eebd05e](https://github.com/coffeebeats/godot-plugin-template/commit/eebd05e512aecd283a3fbd6360273b198ab7d9cc))
+
 ## [0.2.2](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.1...v0.2.2) (2024-05-13)
 
 
