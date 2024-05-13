@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/coffeebeats/godot-plugin-template/compare/v0.1.1...v0.2.0) (2024-05-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* update plugin template to use latest `godot-infra` infrastructure ([#25](https://github.com/coffeebeats/godot-plugin-template/issues/25))
+
+### Features
+
+* add support for `gdpack` ([#19](https://github.com/coffeebeats/godot-plugin-template/issues/19)) ([68f016b](https://github.com/coffeebeats/godot-plugin-template/commit/68f016b38885792b1a5ca777d38a2946dad53a95))
+* **addon:** add `gut` as an addon dependency ([#26](https://github.com/coffeebeats/godot-plugin-template/issues/26)) ([4e2ee08](https://github.com/coffeebeats/godot-plugin-template/commit/4e2ee0851bad6018af5240eee54130327d95ed0a))
+* **ci:** refactor CI workflows; add new `check-commit.yml` workflow ([#15](https://github.com/coffeebeats/godot-plugin-template/issues/15)) ([e10b9ca](https://github.com/coffeebeats/godot-plugin-template/commit/e10b9ca585f0b7c8dc090d21dee9b1b6a7c02111))
+* update plugin template to use latest `godot-infra` infrastructure ([#25](https://github.com/coffeebeats/godot-plugin-template/issues/25)) ([cb0fcae](https://github.com/coffeebeats/godot-plugin-template/commit/cb0fcae4ce7f84018a0c8a2d18360228318ea251))
+
 ## [0.1.1](https://github.com/coffeebeats/godot-plugin-template/compare/v0.1.0...v0.1.1) (2023-03-27)
 
 
