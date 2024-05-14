@@ -2,6 +2,9 @@
 
 A template repository for a Godot 4+ plugin.
 
+> [!NOTE]
+> After instantiating a plugin from this repository, be sure to update placeholder text in [plugin.cfg](./plugin.cfg).
+
 ## **Development**
 
 ### Setup
