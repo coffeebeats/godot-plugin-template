@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.7 (2024-05-14)
+
+## What's Changed
+* chore(ci): migrate `release-please` action by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/40
+* chore: update link in README to point to new `release-please` repository by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/41
+* chore(ci): switch to `github` changelog type by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/42
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.6...v0.2.7
+
 ## [0.2.6](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.5...v0.2.6) (2024-05-14)
 
 
