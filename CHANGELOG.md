@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.5...v0.2.6) (2024-05-14)
+
+
+### Bug Fixes
+
+* **ci:** publish addon to branch prefixed with `godot-` ([#37](https://github.com/coffeebeats/godot-plugin-template/issues/37)) ([a5ed535](https://github.com/coffeebeats/godot-plugin-template/commit/a5ed53563dc5cf3e2ddd86f29e190f2de08a4bc8))
+
 ## [0.2.5](https://github.com/coffeebeats/godot-plugin-template/compare/v0.2.4...v0.2.5) (2024-05-13)
 
 
