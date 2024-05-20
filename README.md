@@ -63,6 +63,11 @@ In addition to [Secrets](#secrets), the following files should be customized for
 - [plugin.cfg](./plugin.cfg) - update the title, description, and other properties of the plugin configuration file.
 - [.github/workflows/release-please.yml](.github/workflows/release-please.yml) - ensure the project is correctly packaged into an addon.
 
+Also update repository settings in GitHub, including:
+
+- General repository features
+- Branch protection for `main` and `godot-v4.*` release branches
+
 ## **Version history**
 
 See [CHANGELOG.md](https://github.com/coffeebeats/godot-plugin-template/blob/main/CHANGELOG.md).
