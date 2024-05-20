@@ -60,7 +60,8 @@ After instantiating a project from this template repository, the default GitHub 
 
 In addition to [Secrets](#secrets), the following files should be customized for the instantiated repository:
 
-- [.github/workflows/release-please.yaml](.github/workflows/release-please.yaml) - set the current project title when publishing.
+- [plugin.cfg](./plugin.cfg) - update the title, description, and other properties of the plugin configuration file.
+- [.github/workflows/release-please.yml](.github/workflows/release-please.yml) - ensure the project is correctly packaged into an addon.
 
 ## **Version history**
 
