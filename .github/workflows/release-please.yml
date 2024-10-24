@@ -50,12 +50,12 @@ jobs:
         with:
           submodules: true
 
-      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@main # TODO: Pin this to 'v0'.
+      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v0
         id: version
         with:
           gdenv-pin-path: .godot-version
 
-      - uses: coffeebeats/godot-infra/.github/actions/setup-godot@main # TODO: Pin this to 'v0'.
+      - uses: coffeebeats/godot-infra/.github/actions/setup-godot@v0
         with:
           version: ${{ steps.version.outputs.semantic }}
 
