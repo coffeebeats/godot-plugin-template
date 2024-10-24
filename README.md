@@ -5,6 +5,17 @@ A template repository for a Godot 4+ plugin.
 > [!NOTE]
 > After instantiating a plugin from this repository, be sure to update placeholder text in [plugin.cfg](./plugin.cfg).
 
+## Usage
+
+### Add as a dependency
+
+To use this plugin, add this repository as a submodule of a Godot project (typically under the `addons` directory). The following section lists which version should be used depending on the project's supported Godot version.
+
+#### Branch name / Release tag: Godot version
+
+- `main` / `v1`: `v4.3`
+- `v0`: `v4.2`
+
 ## **Development**
 
 ### Setup
