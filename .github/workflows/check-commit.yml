@@ -97,7 +97,6 @@ jobs:
           godot
           --verbose
           --headless
-          --quit
           -s addons/gut/gut_cmdln.gd
           -gdir=res://
           -ginclude_subdirs
