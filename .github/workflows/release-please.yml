@@ -61,9 +61,14 @@ jobs:
         with:
           gdenv-pin-path: .godot-version
 
+      - name: Determine plugin name
+        id: subfolder
+        shell: bash
+        run: echo name="$(echo ${{ github.repository }} | sed -E 's/^${{ github.repository_owner }}\/godot-plugin-//')" >> $GITHUB_OUTPUT
+
       - uses: coffeebeats/godot-infra/package-addon@v1
         with:
-          subfolder: std
+          subfolder: ${{ steps.subfolder.outputs.name }}
           target-branch: "godot-v${{ steps.version.outputs.major-minor }}"
           godot-editor-version: "v${{ steps.version.outputs.semantic }}"
           file-excludes: |
