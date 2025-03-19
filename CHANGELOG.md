@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.1 (2025-03-19)
+
+## What's Changed
+* chore(ci): don't automerge Dependabot PRs by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/72
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v2.0.0...v2.0.1
+
 ## 2.0.0 (2025-03-17)
 
 ## What's Changed
