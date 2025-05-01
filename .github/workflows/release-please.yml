@@ -29,6 +29,11 @@ jobs:
           config-file: .release-please/config.json
           manifest-file: .release-please/manifest.json
 
+          # NOTE: If you want 'release-please' PRs to trigger CI/CD workflows,
+          # then a PAT is required. This PAT must have 'contents:write' and
+          # 'pull_requests:write'.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || github.token }}
+
           # NOTE: To handle releases on specific branches (e.g. a '1.X' release branch),
           # simply change the "branches" filter in the workflow's on-"push" trigger.
           target-branch: ${{ github.ref_name }}
