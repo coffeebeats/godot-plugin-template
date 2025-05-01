@@ -4,6 +4,9 @@ permissions:
   contents: read
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       platform:
@@ -35,9 +38,76 @@ on:
         default: 75
 
 jobs:
-  compile:
+  compile-dispatch:
+    if: github.event_name == 'workflow_dispatch'
+
     runs-on: ubuntu-latest
     timeout-minutes: ${{ fromJson(inputs.timeout) }}
+
+    steps:
+      - uses: coffeebeats/godot-infra/compile-godot-export-template@v2
+        with:
+          compile-editor: true
+          publish: true
+
+          godot-src-rev: ${{ inputs.ref }}
+          godot-patches: .patches/godotengine/godot/*
+
+          platform: ${{ inputs.platform }}
+          arch: ${{ inputs.arch }}
+
+  config:
+    if: github.event_name == 'push'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    outputs:
+      build-required: ${{ steps.required.outputs.value }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      - name: Check for any changes
+        id: changes
+        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c
+        with:
+          files: |
+            .godot-version
+            .patches/godotengine/godot/*
+
+      - name: Check if build is required
+        id: required
+        shell: bash
+        run: |-
+          if [[
+            "${{ steps.changes.outputs.any_modified }}" == "true" && \
+            ! -z "$(ls -A .patches/godotengine/godot | grep -v .gitkeep)" \
+          ]]; then
+            echo "value=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  compile-push:
+    needs: ["config"]
+    if: |
+      github.event_name == 'push' &&
+      needs.config.outputs.build-required == 'true'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+
+    strategy:
+      fail-fast: true
+
+      matrix:
+        include:
+          - arch: arm64
+            platform: macos
+
+          - arch: x86_64
+            platform: windows
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -57,5 +127,5 @@ jobs:
           godot-src-rev: ${{ steps.version.outputs.semantic }}
           godot-patches: .patches/godotengine/godot/*
 
-          platform: ${{ inputs.platform }}
-          arch: ${{ inputs.arch }}
+          platform: ${{ matrix.platform }}
+          arch: ${{ matrix.arch }}
