@@ -1,0 +1,61 @@
+name: "🤖 Compile: Godot editor"
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        description: "The target platform for the editor build."
+        required: true
+        default: windows
+        options:
+          - macos
+          - windows
+      arch:
+        type: choice
+        description: "The target CPU architecture for the editor build."
+        required: true
+        default: x86_64
+        options:
+          - arm64
+          - x86_64
+
+      ref:
+        type: string
+        description: "This repository's branch or tag name to check out. Defaults to the triggering event's SHA or the HEAD commit of the default branch."
+        required: false
+
+      timeout:
+        type: number
+        description: "The workflow's maximum allowed run duration (in minutes)."
+        required: false
+        default: 75
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ fromJson(inputs.timeout) }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v2
+        id: version
+        with:
+          gdenv-pin-path: .godot-version
+
+      - uses: coffeebeats/godot-infra/compile-godot-export-template@v2
+        with:
+          compile-editor: true
+          publish: true
+
+          godot-src-rev: ${{ steps.version.outputs.semantic }}
+          godot-patches: .patches/godotengine/godot/*
+
+          platform: ${{ inputs.platform }}
+          arch: ${{ inputs.arch }}
