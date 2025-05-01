@@ -45,12 +45,21 @@ jobs:
     timeout-minutes: ${{ fromJson(inputs.timeout) }}
 
     steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v2
+        id: version
+        with:
+          gdenv-pin-path: .godot-version
+
       - uses: coffeebeats/godot-infra/compile-godot-export-template@v2
         with:
           compile-editor: true
           publish: true
 
-          godot-src-rev: ${{ inputs.ref }}
+          godot-src-rev: ${{ steps.version.outputs.semantic }}
           godot-patches: .patches/godotengine/godot/*
 
           platform: ${{ inputs.platform }}
@@ -111,8 +120,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: ${{ inputs.ref }}
 
       - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v2
         id: version
