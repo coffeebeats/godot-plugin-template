@@ -109,9 +109,7 @@ jobs:
   # Used to ensure all branch protection requirements are met. This is a workaround until
   # https://github.com/github-community/community/discussions/4324 is addressed.
   branch_protection:
-    needs:
-      - "format-and-lint"
-      - "test"
+    needs: ["format-and-lint", "test"]
     if: ${{ always() }}
 
     runs-on: ubuntu-latest
