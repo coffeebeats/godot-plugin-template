@@ -35,7 +35,7 @@ on:
         type: number
         description: "The workflow's maximum allowed run duration (in minutes)."
         required: false
-        default: 75
+        default: 120
 
 jobs:
   compile-dispatch:
