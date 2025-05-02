@@ -16,3 +16,6 @@ godot.exe
 
 # Testing-related ignores
 # ...
+
+# IDE-related files
+.vscode/*
