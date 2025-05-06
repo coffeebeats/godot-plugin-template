@@ -9,7 +9,7 @@
 
 # Godot source/editor files
 /.scons
-/godot/
+/godot
 Godot.app
 godot.app
 Godot.exe
