@@ -81,7 +81,7 @@ jobs:
 
       - name: Check for any changes
         id: changes
-        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62
         with:
           files: |
             .godot-version
