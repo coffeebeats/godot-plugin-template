@@ -13,7 +13,8 @@ To use this plugin, add this repository as a submodule of a Godot project (typic
 
 #### Branch name / Release tag: Godot version
 
-- `main` / `v2`: `v4.4.1`
+- `main` / `v3`: `v4.5`
+- `v2`: `v4.4`
 - `v1`: `v4.3`
 - `v0`: `v4.2`
 

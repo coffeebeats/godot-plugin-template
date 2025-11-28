@@ -62,7 +62,7 @@ jobs:
         with:
           submodules: true
 
-      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v2
+      - uses: coffeebeats/godot-infra/.github/actions/parse-godot-version@v3
         id: version
         with:
           gdenv-pin-path: .godot-version
@@ -72,7 +72,7 @@ jobs:
         shell: bash
         run: echo name="$(echo ${{ github.repository }} | sed -E 's/^${{ github.repository_owner }}\/godot-plugin-//')" >> $GITHUB_OUTPUT
 
-      - uses: coffeebeats/godot-infra/package-addon@v2
+      - uses: coffeebeats/godot-infra/package-addon@v3
         with:
           subfolder: ${{ steps.subfolder.outputs.name }}
           target-branch: "godot-v${{ steps.version.outputs.major-minor }}"
