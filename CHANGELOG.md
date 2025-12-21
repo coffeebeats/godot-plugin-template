@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0.1 (2025-12-21)
+
+## What's Changed
+* chore(deps): bump actions/checkout from 5.0.0 to 6.0.0 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/94
+* chore(ci): remove workflow to compile editor by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/96
+* chore(addons): update `Gut` to latest by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/97
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v3.0.0...v3.0.1
+
 ## 3.0.0 (2025-11-28)
 
 ## What's Changed
