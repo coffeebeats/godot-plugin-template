@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.1 (2026-01-29)
+
+## What's Changed
+* fix(docs): Update README for branch naming conventions by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/102
+* fix(docs): Update README for branch naming and versions by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/104
+* chore(ci,docs): clean up repository secrets usage by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/105
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v4.0.0...v4.0.1
+
 ## 4.0.0 (2026-01-29)
 
 ## What's Changed
