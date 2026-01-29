@@ -68,7 +68,8 @@ When submitting code for review, ensure the following requirements are met:
 
 After instantiating a project from this template repository, the default GitHub actions and workflows require the following repository secrets to be set:
 
-- `ACTIONS_BOT_TOKEN` - If desired, create a PAT for GitHub actions to use when checking a project; allows fix-formatting commits to trigger actions.
+- `GHA_TOKEN` - If desired, create a PAT for GitHub actions to use when checking a project; allows fix-formatting commits to trigger actions.
+- `RELEASE_PLEASE_TOKEN` - Enables release pull requests to run CI/CD workflows.
 
 ### Customization
 
