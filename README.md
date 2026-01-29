@@ -13,7 +13,8 @@ To use this plugin, add this repository as a submodule of a Godot project (typic
 
 #### Branch name / Release tag: Godot version
 
-- `main` / `v3`: `v4.5`
+- `main` / `v4`: `v4.6`
+- `v3`: `v4.5`
 - `v2`: `v4.4`
 - `v1`: `v4.3`
 - `v0`: `v4.2`
@@ -37,20 +38,19 @@ When submitting code for review, ensure the following requirements are met:
 2. The project is correctly formatted using [gdformat](https://github.com/Scony/godot-gdscript-toolkit/wiki/4.-Formatter):
 
     ```sh
-    bin/gdformat -l 88 --check **/*.gd
+    gdformat -l 88 --check **/*.gd
     ```
 
 3. All [gdlint](https://github.com/Scony/godot-gdscript-toolkit/wiki/3.-Linter) linter warnings are addressed:
 
     ```sh
-    bin/gdlint **/*.gd
+    gdlint **/*.gd
     ```
 
 4. All [Gut](https://github.com/bitwes/Gut) unit tests pass:
 
     ```sh
     godot \
-        --quit \
         --headless \
         -s addons/gut/gut_cmdln.gd \
         -gdir="res://" \
