@@ -11,13 +11,13 @@ A template repository for a Godot 4+ plugin.
 
 To use this plugin, add this repository as a submodule of a Godot project (typically under the `addons` directory). The following section lists which version should be used depending on the project's supported Godot version.
 
-#### Branch name / Release tag: Godot version
+#### Branch name (Release version): Godot version
 
-- `main` / `v4`: `v4.6`
-- `v3`: `v4.5`
-- `v2`: `v4.4`
-- `v1`: `v4.3`
-- `v0`: `v4.2`
+- `main` / `godot-v4.6` (`v4`): `v4.6`
+- `godot-v4.5` (`v3`): `v4.5`
+- `godot-v4.4` (`v2`): `v4.5`
+- ~`godot-v4.3`~ (`v1`): `v4.5`
+- `godot-v4.2` (`v0`): `v4.2`
 
 ## **Development**
 
@@ -68,7 +68,8 @@ When submitting code for review, ensure the following requirements are met:
 
 After instantiating a project from this template repository, the default GitHub actions and workflows require the following repository secrets to be set:
 
-- `ACTIONS_BOT_TOKEN` - If desired, create a PAT for GitHub actions to use when checking a project; allows fix-formatting commits to trigger actions.
+- `GHA_TOKEN` - If desired, create a PAT for GitHub actions to use when checking a project; allows fix-formatting commits to trigger actions.
+- `RELEASE_PLEASE_TOKEN` - Enables release pull requests to run CI/CD workflows.
 
 ### Customization
 
