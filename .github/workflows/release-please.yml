@@ -82,3 +82,4 @@ jobs:
             **/CLAUDE.md
 
             **/*_test.gd
+            **/*_test.gd.uid
