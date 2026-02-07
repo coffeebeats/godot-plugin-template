@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.2 (2026-02-07)
+
+## What's Changed
+* fix(ci): ignore agent instructions and test UID files when packaging by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/107
+* chore(deps): bump actions/checkout from 6.0.1 to 6.0.2 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/106
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v4.0.1...v4.0.2
+
 ## 4.0.1 (2026-01-29)
 
 ## What's Changed
