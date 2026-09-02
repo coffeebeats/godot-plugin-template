@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.0.0 (2026-09-02)
+
+## What's Changed
+* chore(addons): update GUT to `v9.6.0` by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/110
+* chore(deps): bump tj-actions/changed-files from 47.0.1 to 47.0.4 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/109
+* chore(deps): bump tj-actions/changed-files from 47.0.4 to 47.0.5 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/112
+* chore(deps): bump tj-actions/changed-files from 47.0.5 to 47.0.6 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/113
+* chore(deps): bump googleapis/release-please-action from 4.4.0 to 5.0.0 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/114
+* chore(deps): bump actions/checkout from 6.0.2 to 7.0.1 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/117
+* chore!: update to Godot `v4.7` by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/118
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v4.0.2...v5.0.0
+
 ## 4.0.2 (2026-02-07)
 
 ## What's Changed
