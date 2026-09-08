@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.0.1 (2026-09-08)
+
+## What's Changed
+* docs(readme): exclude vendored addons from the format and lint commands by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/119
+* chore: drive gdformat and gdlint from checked-in config files by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/121
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v5.0.0...v5.0.1
+
 ## 5.0.0 (2026-09-02)
 
 ## What's Changed
