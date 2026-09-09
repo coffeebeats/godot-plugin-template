@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.2 (2026-09-09)
+
+## What's Changed
+* chore: promote default-on GDScript warnings to compile errors by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/122
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v5.0.1...v5.0.2
+
 ## 5.0.1 (2026-09-08)
 
 ## What's Changed
