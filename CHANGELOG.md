@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.0.3 (2026-09-11)
+
+## What's Changed
+* chore(tools): pin gdtoolkit with uv by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/124
+* chore(ci): run format-and-lint on any change, not only GDScript by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/126
+* chore(repo): ignore Python bytecode caches by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/127
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v5.0.2...v5.0.3
+
 ## 5.0.2 (2026-09-09)
 
 ## What's Changed
