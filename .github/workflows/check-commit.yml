@@ -15,8 +15,6 @@ jobs:
   check:
     uses: coffeebeats/godot-infra/.github/workflows/check-project.yaml@v6
     secrets: inherit
-    with:
-      line-length-max: "88"
 
   # NOTE: This job name is required by the branch ruleset.
   branch_protection:
