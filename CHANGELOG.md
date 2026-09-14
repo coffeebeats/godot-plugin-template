@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.0 (2026-09-14)
+
+## What's Changed
+* feat!: publish to 'dist' on independent versions by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/129
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v5.0.3...v6.0.0
+
 ## 5.0.3 (2026-09-13)
 
 ## What's Changed
