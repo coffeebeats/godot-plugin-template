@@ -1,6 +1,6 @@
 # godot-plugin-template
 
-A template repository for a Godot 4+ plugin.
+A template repository for a Godot 4.7+ plugin.
 
 > [!NOTE]
 > After instantiating a plugin from this repository, be sure to update placeholder text in [plugin.cfg](./plugin.cfg).
@@ -9,16 +9,13 @@ A template repository for a Godot 4+ plugin.
 
 ### Add as a dependency
 
-To use this plugin, add this repository as a submodule of a Godot project (typically under the `addons` directory). The following section lists which version should be used depending on the project's supported Godot version.
+Add this repository's `dist` branch as a submodule of a Godot project, typically under the `addons` directory:
 
-#### Branch name (Release version): Godot version
+```sh
+git submodule add -b dist https://github.com/coffeebeats/godot-plugin-template addons/template
+```
 
-- `main` / `godot-v4.7` (`v5`): `v4.7`
-- `godot-v4.6` (`v4`): `v4.6`
-- `godot-v4.5` (`v3`): `v4.5`
-- `godot-v4.4` (`v2`): `v4.5`
-- ~`godot-v4.3`~ (`v1`): `v4.5`
-- `godot-v4.2` (`v0`): `v4.2`
+Each release is a commit on `dist`, tagged `dist/vX.Y.Z`. Versions follow semantic versioning independently of Godot; raising the minimum Godot version is a major release.
 
 ## **Development**
 
@@ -82,7 +79,7 @@ In addition to [Secrets](#secrets), the following files should be customized for
 Also update repository settings in GitHub, including:
 
 - General repository features
-- Branch protection for `main` and `godot-v4.*` release branches
+- Branch protection for `main` and the `dist` branch
 
 ## **Version history**
 
