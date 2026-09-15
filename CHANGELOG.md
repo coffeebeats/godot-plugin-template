@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.1 (2026-09-15)
+
+## What's Changed
+* chore(claude): enable godot-infra's 'godot' agent plugin by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/131
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v6.0.0...v6.0.1
+
 ## 6.0.0 (2026-09-14)
 
 ## What's Changed
