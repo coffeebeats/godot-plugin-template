@@ -24,5 +24,6 @@ godot.exe
 # ...
 
 # IDE-related files
+.claude/settings.local.json
 .vscode/*
 !.vscode/extensions.json
