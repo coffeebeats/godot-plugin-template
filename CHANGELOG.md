@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.3 (2026-09-19)
+
+## What's Changed
+* docs(readme): add the agent plugin install step to setup by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/135
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v6.0.2...v6.0.3
+
 ## 6.0.2 (2026-09-17)
 
 ## What's Changed
