@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.0.3 (2026-10-26)
+
+## What's Changed
+* docs(readme): add the agent plugin install step to setup by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/135
+* chore(ci): group Dependabot updates by ecosystem by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/138
+* chore(ci): update Python tooling with Dependabot by @coffeebeats in https://github.com/coffeebeats/godot-plugin-template/pull/137
+* chore(deps-dev): bump ruff from 0.16.7 to 0.17.2 in the python group by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/139
+* chore(deps): bump setuptools from 84.0.0 to 84.1.0 by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/140
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v6.0.2...v6.0.3
+
 ## 6.0.2 (2026-09-17)
 
 ## What's Changed
