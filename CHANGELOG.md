@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.4 (2026-11-01)
+
+## What's Changed
+* chore(deps-dev): bump ruff from 0.17.2 to 0.17.3 in the python group by @dependabot[bot] in https://github.com/coffeebeats/godot-plugin-template/pull/141
+
+
+**Full Changelog**: https://github.com/coffeebeats/godot-plugin-template/compare/v6.0.3...v6.0.4
+
 ## 6.0.3 (2026-10-26)
 
 ## What's Changed
